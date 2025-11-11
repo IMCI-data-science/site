@@ -1,0 +1,22 @@
+<span id="a">joe@portfolio</span>:<span id="b">~</span><span id="c">$</span> cd Portfolio/<!-- laglaglaglaglaglag -->About_Me
+<span id="a">joe@portfolio</span>:<span id="b">~</span><span id="c">$</span> cat <!-- laglaglaglaglaglaglaglaglag -->joe.txt<br/><br/>
+My favorite quote, "<span id="k">Data is the new oil, but analytics is the combustion engine</span>". <!-- sjkfhskjf -->
+
+Hey There! Welcome to my terminal-based portfolio.<!-- laglaglaglaglaglaglaglaglaglaglaglag --><p>I'm Joe, a Supply Chain & Data Analytics Professional based in Singapore.</p>
+<p>I specialize in bridging data and business strategy, optimizing supply chains through analytics and automation.</p> <!-- bitlagbitlagbitlagbitlagbitlagbitlag -->
+<p>My core competencies include supply chain management, data analytics, and business intelligence. I work with tools like Python, SQL, R, Tableau, and Power BI to turn complex data into actionable insights.</p><!-- delaydelaydelaydelaydelaydelaydelay -->
+<p>I'm passionate about using technology to solve real-world problems and create positive social impact. <br><br><br>Check out my recent projects: <a href="projects.html">Projects Portfolio</a>.</p><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
+<p>Some of my key projects include:<br>
+- Supply Chain Dashboard (Python, React, PostgreSQL)<br>
+- Demand Forecasting Model (Machine Learning, SARIMA, LSTM)<br>
+- Vendor Performance Analyzer (SQL, Power BI)<br>
+- Data Pipeline Automation (Apache Airflow, Docker, AWS)</p>
+
+<p>You can find me on these platforms: <br> 
+<a href="https://github.com/joeknowsdata">GitHub</a> <br> 
+<a href="https://linkedin.com/in/yourprofile">LinkedIn</a> <br>
+<a href="about.html">More About Me</a></p>
+
+Feel free to reach out<!-- slightdelayhere-->. I'm always open to discussing new opportunities, collaborations, or just chatting about data and supply chain optimization<!-- longlonglongcomment -->. Contact me at <a href="mailto:your.email@example.com">your.email@example.com</a>.
+
+<p>Cheers!<br>- Joe</p>
