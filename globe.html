@@ -118,7 +118,7 @@
             </div>
             <h1 style="color: #0f0; font-size: 24px; margin: 0;">GLOBAL ACTIVITIES MAP</h1>
             <div style="color: #888; font-size: 12px; margin-top: 5px;">
-                Drag to rotate • Click pins for details
+                Drag to rotate • Scroll to zoom • Click pins for details
             </div>
         </div>
         
@@ -141,25 +141,23 @@
         const height = Math.min(window.innerHeight * 0.8, 800);
         const sensitivity = 75;
 
-        // Location coordinates mapping - extend this as needed
+        // Location coordinates mapping - populated from CSV
         const locationCoords = {
-            "Myoko, Japan": [138.5141, 36.8913],
-            "Christchurch, New Zealand": [172.6362, -43.5320],
-            "Glasgow, UK": [-4.2518, 55.8642],
-            "Rwanda": [29.8739, -1.9403],
-            "Uganda": [32.2903, 1.3733],
-            "Tanzania": [34.8888, -6.3690],
-            "Singapore": [103.8198, 1.3521],
-            "London": [0.1278, 51.5074],
-            "Manchester": [-2.2426, 53.4808],
-            "San Francisco": [-122.4194, 37.7749],
-            "Bangkok": [100.5018, 13.7563],
-            "Kuala Lumpur": [101.6869, 3.1390],
-            "Hong Kong": [114.1095, 22.3193],
-            "Tokyo": [139.6917, 35.6895],
-            "Edinburgh": [-3.4360, 55.3781],
-            "Paris": [2.3522, 48.8566],
-            "New Delhi": [77.2090, 28.6139]
+            "Myoko, Japan": [138.25, 37.0333],
+            "Christchurch, New Zealand": [172.639847, -43.525650],
+            "Glasgow, UK": [-4.251433, 55.860916],
+            "Rwanda": [30.0318, -1.985],
+            "Uganda": [32.5825, 0.34759],
+            "Tanzania": [39.1783, -6.776],
+            "Tours, France": [0.6892, 47.2435],
+            "Singapore, Singapore": [103.85, 1.289],
+            "Cambridge, UK": [0.119167, 52.205276],
+            "Manchester, UK": [-2.2446, 53.483959],
+            "Toronto, Canada": [-79.347015, 43.65107],
+            "Round Rock, USA": [-97.6789, 30.5083],
+            "Jakarta, Indonesia": [106.81666, -6.2],
+            "Beirut, Lebanon": [35.49548, 33.88863],
+            "Dublin, Ireland": [-6.26615, 53.35014]
         };
 
         let activities = [];
@@ -277,8 +275,8 @@
                             .attr("dur", "2s")
                             .attr("repeatCount", "indefinite");
 
-                        // Main pin (larger if multiple activities)
-                        const pinRadius = count > 1 ? 7 : 5;
+                        // Main pin
+                        const pinRadius = 5;
                         pinG.append("circle")
                             .attr("cx", coords[0])
                             .attr("cy", coords[1])
@@ -286,28 +284,6 @@
                             .attr("fill", "#0f0")
                             .attr("stroke", "#0bc")
                             .attr("stroke-width", 2);
-
-                        // Add count badge if multiple activities
-                        if (count > 1) {
-                            pinG.append("circle")
-                                .attr("cx", coords[0] + 8)
-                                .attr("cy", coords[1] - 8)
-                                .attr("r", 8)
-                                .attr("fill", "#ff0096")
-                                .attr("stroke", "#0bc")
-                                .attr("stroke-width", 1);
-
-                            pinG.append("text")
-                                .attr("x", coords[0] + 8)
-                                .attr("y", coords[1] - 8)
-                                .attr("text-anchor", "middle")
-                                .attr("dominant-baseline", "central")
-                                .attr("fill", "#000")
-                                .attr("font-family", "Courier New, monospace")
-                                .attr("font-size", "10px")
-                                .attr("font-weight", "bold")
-                                .text(count);
-                        }
 
                         // Click handler - show all activities at this location
                         pinG.on("click", function(event) {
@@ -336,16 +312,15 @@
         function showInfoMultiple(activitiesAtLocation) {
             const panel = d3.select("#info-panel");
             
-            let html = `<h3 style="color: #0f0;">${activitiesAtLocation[0].name}</h3>`;
-            html += `<p style="color: #888; font-size: 11px; margin-bottom: 10px;">${activitiesAtLocation.length} ${activitiesAtLocation.length === 1 ? 'activity' : 'activities'} at this location</p>`;
+            let html = `<h3 style="color: #0f0; font-size: 18px;">${activitiesAtLocation[0].name}</h3>`;
+            html += `<p style="color: #888; font-size: 13px; margin-bottom: 10px;">${activitiesAtLocation.length} ${activitiesAtLocation.length === 1 ? 'activity' : 'activities'} at this location</p>`;
             
             activitiesAtLocation.forEach((activity, index) => {
                 if (index > 0) html += '<hr style="border-color: #0f0; margin: 10px 0;">';
                 html += `
                     <div style="margin-bottom: 8px;">
-                        <h4 style="color: #0bc; margin: 0 0 5px 0; font-size: 14px;">${activity.title}</h4>
-                        <p style="margin: 3px 0;"><strong style="color: #0f0;">Year:</strong> ${activity.year}</p>
-                        <p style="margin: 3px 0;">${activity.description}</p>
+                        <h4 style="color: #0bc; margin: 0 0 5px 0; font-size: 16px;">${activity.title}</h4>
+                        <p style="margin: 3px 0; font-size: 14px;">${activity.description}</p>
                     </div>
                 `;
             });
@@ -381,6 +356,24 @@
                 setTimeout(() => {
                     isDragging = false;
                 }, 100);
+            })
+        );
+
+        // Zoom behavior
+        svg.call(d3.zoom()
+            .scaleExtent([0.5, 5])
+            .on("zoom", function(event) {
+                if (event.sourceEvent && event.sourceEvent.type === "wheel") {
+                    const newScale = initialScale * event.transform.k;
+                    projection.scale(newScale);
+                    
+                    // Update globe background circle
+                    svg.select("circle")
+                        .attr("r", newScale);
+                    
+                    g.selectAll("path").attr("d", path);
+                    renderPins();
+                }
             })
         );
 

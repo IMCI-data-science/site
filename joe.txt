@@ -7,9 +7,10 @@ My perfect date? "<span id="k">yy mm dd</span>". <!-- sjkfhskjf -->
 
 
 <p>Click here for: <br> 
-<a href="cv.html">My CV</a> <br> 
-<a href="projects.html">My Project Portfolio</a> <br>
-<a href="blog.html">My Blog</a> <br>
+<a href="cv.html">CV</a> <br> 
+<a href="projects.html">Projects</a> <br>
+<a href="research.html">Research</a> <br>
+<a href="blog.html">Blog</a> <br>
 <a href="globe.html">Where's Joe?</a> <br> 
 
 
